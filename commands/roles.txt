@@ -1,0 +1,10 @@
+administrator:
+victor-victor
+daniel-daniel
+
+superuser:
+super-super
+
+guest para pruebas:
+guest-guest
+123-123
