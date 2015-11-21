@@ -55,6 +55,8 @@ class StudentSearch extends Student
             return $dataProvider;
         }
 
+        $query->joinWith('curriculum');
+        
         $query->andFilterWhere([
             'user_id' => $this->user_id,
             'model' => $this->model,

@@ -10,13 +10,13 @@ class RbacController extends Controller
 		$auth = Yii::$app->authManager;
 		$administrator = $auth->createRole('administrator');
 		$auth->add($administrator);
-		$auth->assign($administrator, 2);
+		$auth->assign($administrator, 1);
 	}
 	
 	public function actionSecond() {
 		$auth = Yii::$app->authManager;
 		$administrator = $auth->getRole('administrator');
-		$auth->assign($administrator, 3);
+		$auth->assign($administrator, 2);
 	}
 	
 	public function actionThird() {
@@ -25,7 +25,7 @@ class RbacController extends Controller
 		$auth->add($superuser);
 		$administrator = $auth->getRole('administrator');
 		$auth->addChild($superuser,$administrator);
-		$auth->assign($superuser, 4);
+		$auth->assign($superuser, 3);
 	}
 }
 

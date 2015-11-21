@@ -5,10 +5,9 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Registration */
+/* @var $model app\models\RegistrationEx */
 
-$this->title = Yii::t('app', 'Create Registration');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Registrations'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('app', 'Registration');
 ?>
 <div class="registration-create">
 
@@ -16,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelEx' => $modelEx,
+        'modelStu' => $modelStu, 
     ]) ?>
-
 </div>

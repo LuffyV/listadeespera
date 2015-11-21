@@ -36,6 +36,10 @@ class StudentController extends Controller
         ];
     }
 
+    public function actionImport(){
+        return $this->render('import');
+    }
+
     /**
      * Lists all Student models.
      * @return mixed

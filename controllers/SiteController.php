@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\rbac\ManagerInterface;
 
 class SiteController extends Controller
 {
@@ -60,7 +61,11 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            if(!Yii::$app->user->can('administrator')){
+                return $this->redirect("http://localhost:8080/listadeespera/web/registration/create");
+            } else {
+                return $this->goHome();
+            }
         }
         return $this->render('login', [
             'model' => $model,

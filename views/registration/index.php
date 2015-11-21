@@ -24,24 +24,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'subject_id',
-            'student_id',
-            //'modality',
+            [
+                'attribute' => 'subject_id',
+                'label' => 'Subjects',
+                'value' => 'subject.name',
+            ],
+            [
+                'attribute' => 'teacher',
+                'label' => 'Teacher',
+                'value' => 'subject.teacher',
+            ],
+            /*
+            [
+                'attribute' => 'matricula',
+                'label' => 'Student Id',
+                'value' => 'student.student_id',
+            ],
+            [
+                'attribute' => 'curriculum',
+                'label' => 'Curriculum',
+                'value' => 'student.curriculum_id',
+            ],
+            */
             [
                 'attribute' => 'modality',
                 'label' => 'Modality',
                 'value' => function($dataProvider){
-                    if($dataProvider['modality'] == '0'){
-                        return 'Ordinario';
-                    }
-                    if($dataProvider['modality'] == '1'){
-                        return 'Extraordinario';
-                    } else {
-                        return 'Error al intentar cambiar ';
-                    }
+                    if($dataProvider['modality'] == '0') return 'Ordinario';
+                    if($dataProvider['modality'] == '1') return 'Extraordinario';
                 }
             ],
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

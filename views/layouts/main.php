@@ -36,10 +36,31 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Crear Registro', 'url' => ['/registration/create']],
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Registration',
+                'url' => ['/registration/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+            ['label' => 'Users',
+                'url' => ['/user/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+            ['label' => 'Students',
+                'url' => ['/student/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+            ['label' => 'Subject',
+                'url' => ['/subject/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+            ['label' => 'Curriculum',
+                'url' => ['/curriculum/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+            ['label' => 'Configuration',
+                'url' => ['/configuration/'],
+                'visible' => Yii::$app->user->can('administrator')
+            ],
+
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [

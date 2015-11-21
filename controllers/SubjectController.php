@@ -28,7 +28,7 @@ class SubjectController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        // 'actions' => ['create', 'update', 'view', 'index', 'delete'],
+                        'actions' => ['create', 'update', 'view', 'index', 'delete', 'test'],
                         'roles' => ['administrator'],
                     ],
                 ],

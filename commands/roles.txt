@@ -6,5 +6,4 @@ superuser:
 super-super
 
 guest para pruebas:
-guest-guest
-123-123
+12216345

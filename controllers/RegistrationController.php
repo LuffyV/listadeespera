@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Student;
 use app\models\Registration;
+use app\models\RegistrationEx;
 use app\models\RegistrationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,17 +30,20 @@ class RegistrationController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        // 'actions' => ['create', 'update', 'view', 'index', 'delete'],
                         'roles' => ['administrator'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create'],
+                        'actions' => ['create', 'test'],
                         'roles' => ['@'],
                     ],
                 ],
             ],
         ];
+    }
+
+    public function actionTest(){
+        return $this->render('test');
     }
 
     /**
@@ -68,6 +73,10 @@ class RegistrationController extends Controller
         ]);
     }
 
+
+    public function actionConfirm(){
+        
+    }
     /**
      * Creates a new Registration model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -76,12 +85,16 @@ class RegistrationController extends Controller
     public function actionCreate()
     {
         $model = new Registration();
+        $modelEx = new RegistrationEx();
+        $modelStu = new Student();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelEx' => $modelEx,
+                'modelStu' => $modelStu,
             ]);
         }
     }

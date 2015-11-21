@@ -14,7 +14,7 @@ use Yii;
  *
  * @property Subject $subject
  */
-class Registration extends \yii\db\ActiveRecord
+class RegistrationEx extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,7 +30,7 @@ class Registration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['subject_id'], 'required'],
+            // [['subject_id'], 'required'],
             [['student_id'], 'integer']
         ];
     }
@@ -42,9 +42,9 @@ class Registration extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'subject_id' => Yii::t('app', 'Subjects'),
+            'subject_id' => Yii::t('app', 'Extraordinary Subjects'),
             'student_id' => Yii::t('app', 'Student ID'),
-            'modality' => Yii::t('app', 'Modality (Reg)'),
+            'modality' => Yii::t('app', 'Modality (Ex)'),
         ];
     }
 
@@ -56,25 +56,14 @@ class Registration extends \yii\db\ActiveRecord
         return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStudent()
-    {
-        return $this->hasOne(Student::className(), ['id' => 'student_id']);
-    }
-
     public function beforeSave(){
         $id_numerico = $this->subject_id[0];
         $this->subject_id = $id_numerico;
         
         // guarda directamente el id en vez de pedirlo
         if($this->student_id == null){
-            $this->student_id = Yii::$app->user->identity->id;
+            $this->student_id = Yii::$app->user->identity->username;
         }
-
-        // todos los que se guarden con este modelo son regulares
-        $this->modality = 0;
         return true;
     }
 }

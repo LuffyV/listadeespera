@@ -13,7 +13,7 @@ use app\models\Curriculum;
 <div class="student-form">
 
     <?php 
-        $modelos_educativos = array("MEFI", "MEyA", "Ambos");
+        $modelos_educativos = array("MEFI", "MEyA");
      ?>
 
     <?php $form = ActiveForm::begin(); ?>

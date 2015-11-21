@@ -34,7 +34,7 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'student_id', 'model', 'curriculum_id', 'phone'], 'required'],
+            [['first_name', 'last_name', 'student_id', 'model', 'curriculum_id'], 'required'],
             [['model', 'curriculum_id'], 'integer'],
             [['first_name', 'last_name', 'student_id'], 'string', 'max' => 45],
             [['phone'], 'string', 'max' => 20]
@@ -74,7 +74,6 @@ class Student extends \yii\db\ActiveRecord
     }
 
     public function beforeSave(){
-        $this->user_id = Yii::$app->user->identity->id;
         return true;
     }
 }

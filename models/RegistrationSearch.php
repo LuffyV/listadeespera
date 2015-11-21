@@ -12,13 +12,18 @@ use app\models\Registration;
  */
 class RegistrationSearch extends Registration
 {
+    public $teacher;
+    public $matricula;
+    public $curriculum;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'subject_id', 'student_id', 'modality'], 'integer'],
+            [['id', 'subject_id', 'student_id', 'modality'], 'safe'],
+            [['teacher', 'matricula', 'curriculum'], 'safe'],
         ];
     }
 
@@ -53,6 +58,8 @@ class RegistrationSearch extends Registration
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->joinWith('subject', 'student');
 
         $query->andFilterWhere([
             'id' => $this->id,
