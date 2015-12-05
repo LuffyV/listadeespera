@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Student;
 use app\models\StudentSearch;
+use app\models\FileImport;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -37,7 +39,40 @@ class StudentController extends Controller
     }
 
     public function actionImport(){
-        return $this->render('import');
+        $model = new FileImport();
+        
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->csvFile = UploadedFile::getInstance($model, 'csvFile');
+
+            if ($model->csvFile){
+                    $time = time();
+                    $model->csvFile->saveAs('csv/' .$time. '.' . $model->csvFile->extension);
+                    $model->csvFile = 'csv/' .$time. '.' . $model->csvFile->extension;
+
+                    $handle = fopen($model->csvFile, "r");
+                    while (($fileop = fgetcsv($handle, 1000, ",")) !== false){
+                        $student_id = $fileop[0];
+                        $first_name = $fileop[1];
+                        $last_name = $fileop[2];
+                        $model = $fileop[3];
+                        $curriculum_id = $fileop[4];
+                        $sql = "INSERT INTO student(student_id, first_name, last_name, model, curriculum_id) 
+                        VALUES ('$student_id', '$first_name', '$last_name', '$model', '$curriculum_id')";
+                        $query = Yii::$app->db->createCommand($sql)->execute();
+                    }
+
+                    if ($query) 
+                    {
+                        echo "Se han registrado todos los datos con éxito.";
+                    }
+            }
+        
+        } else {
+            return $this->render('import',
+            [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

@@ -66,6 +66,12 @@ use app\models\Student;
             ->from('student')
             ->where(['user_id' => Yii::$app->user->identity->id])
             ->one();
+
+        $nombreCarrera = (new \yii\db\Query())
+            ->select(['short_name'])
+            ->from('curriculum')
+            ->where(['id' => $informacionEstudiante['curriculum_id']])
+            ->one();
 	?>
 
     <h3>Tu información actual es la siguiente: </h3>
@@ -85,7 +91,7 @@ use app\models\Student;
     </label><br>
     <label>
         Carrera: 
-        <?php echo $informacionEstudiante['curriculum_id'] ?>
+        <?php echo $nombreCarrera['short_name'] ?>
     </label><br><br>
 
     <?php $form = ActiveForm::begin([

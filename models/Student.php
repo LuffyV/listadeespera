@@ -20,6 +20,8 @@ use Yii;
  */
 class Student extends \yii\db\ActiveRecord
 {
+    public $csvFile;
+
     /**
      * @inheritdoc
      */
@@ -37,7 +39,8 @@ class Student extends \yii\db\ActiveRecord
             [['first_name', 'last_name', 'student_id', 'model', 'curriculum_id'], 'required'],
             [['model', 'curriculum_id'], 'integer'],
             [['first_name', 'last_name', 'student_id'], 'string', 'max' => 45],
-            [['phone'], 'string', 'max' => 20]
+            [['phone'], 'string', 'max' => 20],
+            [['csvFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'csv'],
         ];
     }
 

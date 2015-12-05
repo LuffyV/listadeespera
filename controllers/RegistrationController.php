@@ -43,7 +43,7 @@ class RegistrationController extends Controller
     }
 
     public function actionTest(){
-        return $this->render('test');
+
     }
 
     /**
@@ -88,8 +88,13 @@ class RegistrationController extends Controller
         $modelEx = new RegistrationEx();
         $modelStu = new Student();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            return $this->render('test', [
+            ]);
+
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,

@@ -72,9 +72,12 @@ class Registration extends \yii\db\ActiveRecord
         if($this->student_id == null){
             $this->student_id = Yii::$app->user->identity->id;
         }
-
-        // todos los que se guarden con este modelo son regulares
-        $this->modality = 0;
+        
+        // $phone = $_GET['Student[phone]'];
+        //$queryPhone = (new \yii\db\Query());
+        // $queryPhone->createCommand()->update('student', ['phone' => $phone], 'student_id = ' . $this->student_id)->execute();
+        
+        $this->modality = 0; // todos los que se guarden con este modelo son regulares
         return true;
     }
 }

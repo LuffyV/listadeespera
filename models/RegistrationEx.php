@@ -64,6 +64,9 @@ class RegistrationEx extends \yii\db\ActiveRecord
         if($this->student_id == null){
             $this->student_id = Yii::$app->user->identity->username;
         }
+
+        // todos los que se guarden con este modelo son extraordinarios
+        $this->modality = 1;
         return true;
     }
 }
