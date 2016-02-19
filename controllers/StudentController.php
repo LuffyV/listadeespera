@@ -56,17 +56,39 @@ class StudentController extends Controller
                         $last_name = $fileop[2];
                         $model = $fileop[3];
                         $curriculum_id = $fileop[4];
-                        $sql = "INSERT INTO student(student_id, first_name, last_name, model, curriculum_id) 
+                        $password = $fileop[5]; // contraseña 'contra' para pruebas, de momento
+
+                        $username = 'a'.$fileop[0]; // el usuario con el que inician tiene a - ej: a12216345
+                        $password_hash = Yii::$app->getSecurity()->generatePasswordHash($password);
+
+                        $userSql = "INSERT INTO users(username, password_hash) VALUES ('$username', '$password_hash')";
+
+                        $studentSql = "INSERT INTO student(student_id, first_name, last_name, model, curriculum_id) 
                         VALUES ('$student_id', '$first_name', '$last_name', '$model', '$curriculum_id')";
-                        $query = Yii::$app->db->createCommand($sql)->execute();
+
+                        $queryUsers = Yii::$app->db->createCommand($userSql)->execute();
+                        $queryStudent = Yii::$app->db->createCommand($studentSql)->execute();
                     }
 
-                    if ($query) 
-                    {
-                        echo "Se han registrado todos los datos con éxito.";
+                    if ($queryUsers) {
+                        echo "Se han registrado todos los datos con éxito. ";
+                        if($queryStudent){
+                            echo "Se han registrado los estudiantes con éxito";
+
+                            $searchModel = new StudentSearch();
+                            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                            return $this->render('index', [
+                                'searchModel' => $searchModel,
+                                'dataProvider' => $dataProvider,
+                            ]);
+                        } else {
+                            echo "Ha ocurrido un error al agregar uno o más estudiantes a la base de datos";
+                        }
+                    } else {
+                        echo "Ha ocurrido un error al agregar uno o más usuarios a la base de datos";
                     }
             }
-        
         } else {
             return $this->render('import',
             [

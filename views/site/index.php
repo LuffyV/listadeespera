@@ -1,53 +1,60 @@
 <?php
-
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Lista de Espera';
+?>
+
+<?php
+    $horarioSistema = (new \yii\db\Query())
+        ->select(['date_open', 'date_close'])
+        ->from('configuration')
+        ->one();
+
+    // antes de la hora de inicio
+    if(new DateTime() < new DateTime($horarioSistema['date_open'])){
+        $instruccionesSistema = "instructions_before_open";
+    }
+    // entre la hora de inicio y la hora de cierre
+    if(new DateTime() > new DateTime($horarioSistema['date_open']) && new DateTime() < new DateTime($horarioSistema['date_close'])){
+        $instruccionesSistema = "instructions_while_open";
+    }
+    // depués de la hora de cierre
+    if(new DateTime() > new DateTime($horarioSistema['date_close'])){
+        $instruccionesSistema = "instructions_after_close";
+    }
+
+    $instruccionesCarga = (new \yii\db\Query())
+        ->select([$instruccionesSistema])
+        ->from('configuration')
+        ->one();    
 ?>
 <div class="site-index">
-
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h1>Mensaje de entrada!</h1>
+        <p class="lead">Lee con cuidado las instrucciones que se presentan a continuación.</p>
     </div>
 
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+            <div class="col-lg-10">
+                <h2>Hora de Inicio</h2>
+                <p>
+                    <?php echo $horarioSistema['date_open'] ?>
+                </p>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <div class="col-lg-10">
+                <h2>Esto es lo que se debe mostrar</h2>
+                <p>
+                    <?php echo $instruccionesCarga[$instruccionesSistema] ?>
+                </p>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col-lg-10">
+                <h2>Hora de Cierre</h2>
+                <p>
+                    <?php echo $horarioSistema['date_close'] ?>
+                </p>
             </div>
         </div>
-
     </div>
 </div>
