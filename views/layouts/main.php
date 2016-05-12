@@ -30,34 +30,69 @@ AppAsset::register($this);
         'brandLabel' => 'Lista de Espera',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
+            'style' => 'margin'
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Registration',
-                'url' => ['/registration/'],
-                'visible' => Yii::$app->user->can('administrator')
+            ['label' => Yii::t('app', 'Registrations'),
+                'visible' => !Yii::$app->user->isGuest,
+                'items' => [
+                    [
+                        'label' => 'Registro Regular',
+                        'url' => ['/registration/create/'],
+                        'visible' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'label' => 'Registro Extraordinario',
+                        'url' => ['/registration-ex/create/'],
+                        'visible' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'label' => 'Catálogo de Registros Ordinarios',
+                        'url' => ['/registration/'],
+                        'visible' => Yii::$app->user->can('administrator'),
+                    ],
+                    [
+                        'label' => 'Catálogo de Registros Extraordinarios',
+                        'url' => ['/registration-ex/'],
+                        'visible' => Yii::$app->user->can('administrator'),
+                    ],
+                ],
             ],
-            ['label' => 'Users',
-                'url' => ['/user/'],
-                'visible' => Yii::$app->user->can('administrator')
+            ['label' => Yii::t('app', 'Administration'),
+                'visible' => Yii::$app->user->can('administrator'),
+                'items' => [
+                    ['label' => Yii::t('app', 'Users'),
+                        'url' => ['/user/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    ['label' => Yii::t('app', 'Students'),
+                        'url' => ['/student/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    ['label' => Yii::t('app', 'Subjects'),
+                        'url' => ['/subject/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    ['label' => Yii::t('app', 'Curriculum'),
+                        'url' => ['/curriculum/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    ['label' => Yii::t('app', 'Configuration'),
+                        'url' => ['/configuration/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    ['label' => 'Vaciar Base de Datos',
+                        'url' => ['/truncate/'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                ],
             ],
-            ['label' => 'Students',
-                'url' => ['/student/'],
-                'visible' => Yii::$app->user->can('administrator')
-            ],
-            ['label' => 'Subject',
-                'url' => ['/subject/'],
-                'visible' => Yii::$app->user->can('administrator')
-            ],
-            ['label' => 'Curriculum',
-                'url' => ['/curriculum/'],
-                'visible' => Yii::$app->user->can('administrator')
-            ],
-            ['label' => 'Configuration',
-                'url' => ['/configuration/'],
+            ['label' => Yii::t('app', 'Reports'),
+                'url' => ['/report/'],
                 'visible' => Yii::$app->user->can('administrator')
             ],
 
@@ -80,7 +115,7 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
+<!--
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
@@ -88,7 +123,7 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-
+-->
 <?php $this->endBody() ?>
 </body>
 </html>

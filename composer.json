@@ -17,13 +17,18 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*"
+        "yiisoft/yii2-swiftmailer": "*",
+		"letyii/yii2-tinymce": "dev-master",
+        "yiidoc/yii2-redactor": "*",
+        "kartik-v/yii2-widget-datetimepicker": "*",
+		"kartik-v/yii2-popover-x": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
+        "yiisoft/yii2-faker": "*",
+		"letyii/yii2-tinymce": "dev-master"
     },
     "config": {
         "process-timeout": 1800

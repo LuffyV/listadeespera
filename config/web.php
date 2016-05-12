@@ -6,7 +6,21 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language'=>'es', // traducciones
     'components' => [
+        'i18n' => [
+        'translations' => [
+            'app*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@app/messages',
+                'sourceLanguage' => 'es-MX',
+                'fileMap' => [
+                    'app' => 'app.php',
+                    'app/error' => 'error.php',
+                ],
+            ],
+        ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
@@ -46,16 +60,19 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
     ],
+    'modules' => [
+        'redactor' => 'yii\redactor\RedactorModule',
+    ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
     // descomenta esto para que se vea la barra de debug
-    /* $config['bootstrap'][] = 'debug';
+    $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
     ];
-    */
+    
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',

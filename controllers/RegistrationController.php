@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Student;
+use app\models\Curriculum;
 use app\models\Registration;
-use app\models\RegistrationEx;
 use app\models\RegistrationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -34,16 +34,12 @@ class RegistrationController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create', 'test'],
+                        'actions' => ['create', 'confirmation'],
                         'roles' => ['@'],
                     ],
                 ],
             ],
         ];
-    }
-
-    public function actionTest(){
-
     }
 
     /**
@@ -73,10 +69,6 @@ class RegistrationController extends Controller
         ]);
     }
 
-
-    public function actionConfirm(){
-        
-    }
     /**
      * Creates a new Registration model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -84,24 +76,43 @@ class RegistrationController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Registration();
-        $modelEx = new RegistrationEx();
-        $modelStu = new Student();
+        /* Se cuenta el número de materias que se quieren guardar, junto con los datos
+         de cada una y el teléfono del usuario para guardar cada materia y al final
+         actualizar el teléfono */
+        $count = count(Yii::$app->request->post('Registration', null)['subject_id']);
+        $phone = Yii::$app->request->post('Student')['phone'];
+        $datos = Yii::$app->request->post('Registration', null)['subject_id'];
+        // print_r($datos);
+        // echo "El numero de materias que se intentaron meter es: " . $count;
 
-        if ($model->load(Yii::$app->request->post())) {
-            return $this->render('test', [
-            ]);
+        if(Yii::$app->request->post()){
+            $registrations = [new Registration()];
 
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+            for($i = 0; $i < $count; $i++) {
+                $registrations[$i] = new Registration();
+                $registrations[$i]->subject_id = $datos[$i];
+                $registrations[$i]->save(false);
+                // print_r($registrations[$i]);
             }
+            // sólo se actualiza si escriben algo dentro del campo
+            if($phone != ""){
+                $stu = Student::findOne(Yii::$app->user->identity->id);
+                $stu->phone = $phone;
+                $stu->update();
+            }
+            return $this->redirect('confirmation');
         } else {
+            $model = new Registration();
+            $modelStu = new Student();
             return $this->render('create', [
                 'model' => $model,
-                'modelEx' => $modelEx,
                 'modelStu' => $modelStu,
             ]);
         }
+    }
+
+    public function actionConfirmation(){
+        return $this->render('confirmation');
     }
 
     /**

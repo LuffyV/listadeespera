@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Curriculum;
+use app\models\Student;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistrationSearch */
@@ -26,33 +28,33 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'subject_id',
-                'label' => 'Subjects',
+                'label' => Yii::t('app', 'Subject'),
                 'value' => 'subject.name',
             ],
             [
                 'attribute' => 'teacher',
-                'label' => 'Teacher',
+                'label' => Yii::t('app', 'Teacher'),
                 'value' => 'subject.teacher',
             ],
-            /*
             [
-                'attribute' => 'matricula',
-                'label' => 'Student Id',
+                'attribute' => 'student_id',
+                'label' => Yii::t('app', 'Student ID'),
                 'value' => 'student.student_id',
             ],
             [
                 'attribute' => 'curriculum',
-                'label' => 'Curriculum',
-                'value' => 'student.curriculum_id',
+                'label' => Yii::t('app', 'Curriculum'),
+                'value' => function($dataProvider){
+                    return Curriculum::findOne(Student::findOne($dataProvider["student_id"])->curriculum_id)->short_name;
+                },
             ],
-            */
             [
                 'attribute' => 'modality',
-                'label' => 'Modality',
+                'label' => Yii::t('app', 'Modality'),
                 'value' => function($dataProvider){
                     if($dataProvider['modality'] == '0') return 'Ordinario';
                     if($dataProvider['modality'] == '1') return 'Extraordinario';
-                }
+                },
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

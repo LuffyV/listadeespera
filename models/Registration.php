@@ -42,9 +42,9 @@ class Registration extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'subject_id' => Yii::t('app', 'Subjects'),
+            'subject_id' => Yii::t('app', 'Regular Subjects'),
             'student_id' => Yii::t('app', 'Student ID'),
-            'modality' => Yii::t('app', 'Modality (Reg)'),
+            'modality' => Yii::t('app', 'Modality'),
         ];
     }
 
@@ -61,21 +61,14 @@ class Registration extends \yii\db\ActiveRecord
      */
     public function getStudent()
     {
-        return $this->hasOne(Student::className(), ['id' => 'student_id']);
+        return $this->hasOne(Student::className(), ['user_id' => 'student_id']);
     }
 
     public function beforeSave(){
-        $id_numerico = $this->subject_id[0];
-        $this->subject_id = $id_numerico;
-        
         // guarda directamente el id en vez de pedirlo
         if($this->student_id == null){
             $this->student_id = Yii::$app->user->identity->id;
         }
-        
-        // $phone = $_GET['Student[phone]'];
-        //$queryPhone = (new \yii\db\Query());
-        // $queryPhone->createCommand()->update('student', ['phone' => $phone], 'student_id = ' . $this->student_id)->execute();
         
         $this->modality = 0; // todos los que se guarden con este modelo son regulares
         return true;

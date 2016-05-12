@@ -31,25 +31,30 @@ $this->title = 'Lista de Espera';
 ?>
 <div class="site-index">
     <div class="jumbotron">
-        <h1>Mensaje de entrada!</h1>
-        <p class="lead">Lee con cuidado las instrucciones que se presentan a continuación.</p>
+        <div style="display: inline-block; width: 20%;">
+            <img src="http://www.yucatannews.com.mx/wp-content/uploads/2012/02/Uady-logo.png" height="200px">
+        </div>
+        <div align="right" style="display: inline-block; width: 70%;">
+            <h1>Mensaje de entrada!</h1>
+            <p class="lead">Lee con cuidado las instrucciones que se presentan a continuación.</p>
+        </div>
     </div>
 
     <div class="body-content">
         <div class="row">
             <div class="col-lg-10">
+                <h2>Instrucciones</h2>
+                <p>
+                    <?php echo $instruccionesCarga[$instruccionesSistema] ?>
+                </p>
+            </div>
+            <div class="col-lg-5" style="display: inline-block;">
                 <h2>Hora de Inicio</h2>
                 <p>
                     <?php echo $horarioSistema['date_open'] ?>
                 </p>
             </div>
-            <div class="col-lg-10">
-                <h2>Esto es lo que se debe mostrar</h2>
-                <p>
-                    <?php echo $instruccionesCarga[$instruccionesSistema] ?>
-                </p>
-            </div>
-            <div class="col-lg-10">
+            <div class="col-lg-5" style="display: inline-block;">
                 <h2>Hora de Cierre</h2>
                 <p>
                     <?php echo $horarioSistema['date_close'] ?>

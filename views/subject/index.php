@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subject-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="display: inline-block;"><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
+    <div style="display: inline-block; margin-left: 2em;">
         <?= Html::a(Yii::t('app', 'Create Subject'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

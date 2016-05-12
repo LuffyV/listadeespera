@@ -61,12 +61,11 @@ class RegistrationSearch extends Registration
 
         $query->joinWith('subject', 'student');
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'subject_id' => $this->subject_id,
-            'student_id' => $this->student_id,
-            'modality' => $this->modality,
-        ]);
+
+        $query->andFilterWhere(['like', 'subject_id', $this->subject_id])
+            ->andFilterWhere(['like', 'student_id', $this->student_id])
+            ->andFilterWhere(['modality' => 0]);
+            // ->andFilterWhere(['like', 'modality', $this->modality]);
 
         return $dataProvider;
     }

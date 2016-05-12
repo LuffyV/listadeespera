@@ -56,7 +56,8 @@ class StudentController extends Controller
                         $last_name = $fileop[2];
                         $model = $fileop[3];
                         $curriculum_id = $fileop[4];
-                        $password = $fileop[5]; // contraseña 'contra' para pruebas, de momento
+                        $password = $fileop[5];
+                        // contraseña 'contra' para pruebas, de momento, en el csv.. podría quitarse de ahí y tenerlo directo
 
                         $username = 'a'.$fileop[0]; // el usuario con el que inician tiene a - ej: a12216345
                         $password_hash = Yii::$app->getSecurity()->generatePasswordHash($password);

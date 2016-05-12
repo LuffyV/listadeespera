@@ -89,3 +89,18 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+.popover-footer{
+    padding: .7em;
+}
+
+#conf-img {
+    width: 100%;
+    height: auto;
+    padding: .5em;
+}
+
+.center img {        
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}

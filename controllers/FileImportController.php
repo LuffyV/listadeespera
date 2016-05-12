@@ -24,7 +24,6 @@ class FileImportController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        // 'actions' => ['create', 'update', 'view', 'index', 'delete'],
                         'roles' => ['administrator'],
                     ],
                 ],

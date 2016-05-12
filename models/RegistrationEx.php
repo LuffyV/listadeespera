@@ -30,7 +30,7 @@ class RegistrationEx extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // [['subject_id'], 'required'],
+            [['subject_id'], 'required'],
             [['student_id'], 'integer']
         ];
     }
@@ -56,13 +56,15 @@ class RegistrationEx extends \yii\db\ActiveRecord
         return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
     }
 
+    public function getStudent()
+    {
+        return $this->hasOne(Student::className(), ['user_id' => 'student_id']);
+    }
+
     public function beforeSave(){
-        $id_numerico = $this->subject_id[0];
-        $this->subject_id = $id_numerico;
-        
-        // guarda directamente el id en vez de pedirlo
+        // guarda directamente el id del estudiante
         if($this->student_id == null){
-            $this->student_id = Yii::$app->user->identity->username;
+            $this->student_id = Yii::$app->user->identity->id;
         }
 
         // todos los que se guarden con este modelo son extraordinarios
