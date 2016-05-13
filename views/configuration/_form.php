@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use letyii\tinymce\TinyMce;
 use kartik\datetime\DateTimePicker;
+use kartik\widgets\TouchSpin;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Configuration */
@@ -12,11 +13,13 @@ use kartik\datetime\DateTimePicker;
 
 <div class="configuration-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); ?> 
 
-    <?= $form->field($model, 'max_subject_regular')->textInput() ?>
+    <?= $form->field($model, 'max_subject_regular')->widget(\kartik\touchspin\TouchSpin::classname(), [
+            'options' => ['placeholder' => 'Adjust ...']]); ?>
 
-    <?= $form->field($model, 'max_subject_extraordinary')->textInput() ?>
+    <?= $form->field($model, 'max_subject_extraordinary')->widget(\kartik\touchspin\TouchSpin::classname(), [
+            'options' => ['placeholder' => 'Adjust ...']]); ?>
 
     <?= $form->field($model, 'instructions_before_open')->widget(letyii\tinymce\Tinymce::className(), [
             'options' => ['id' => 'testid']]); ?>

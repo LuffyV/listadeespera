@@ -93,7 +93,7 @@ use kartik\popover\PopoverX;
             ]) ?>
 
             <?= $form->field($model, 'subject_id')->checkboxList(
-                ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+                ArrayHelper::map(Subject::find()->orderBy('name')->all(), 'id', 'name'),
                 array('class'=>'RegistrationReg'))
             ?>
         </div>
@@ -102,6 +102,7 @@ use kartik\popover\PopoverX;
             <?php 
                 echo PopoverX::widget([
                     'header' => '<b>¿Estás completamente seguro?</b>',
+                    'type' => PopoverX::TYPE_INFO,
                     'placement' => PopoverX::ALIGN_RIGHT,
                     'content' => "Revisa bien tu información antes de continuar.
                     Una vez que aceptes NO PODRÁS REALIZAR CAMBIOS y tendrás que comunicarte con Control Escolar

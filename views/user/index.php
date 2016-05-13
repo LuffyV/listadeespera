@@ -15,9 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
+    <!-- 
     <p>
         <?= Html::a(Yii::t('app', 'Create Users'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    -->
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'password_hash',
             // 'auth_key',
             // 'access_token',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

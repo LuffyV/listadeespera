@@ -32,14 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'user_id',
+            // 'user_id',
             'first_name',
             'last_name',
             'student_id',
             // 'model',
             [
                 'attribute' => 'model',
-                'label' => 'Educational Model',
+                'label' => Yii::t('app', 'Educational Model'),
                 'value' => function($dataProvider){
                     if($dataProvider['model'] == '0') return 'MEFI';
                     if($dataProvider['model'] == '1') return 'MEyA';
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'phone',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
         ],
     ]); ?>
 

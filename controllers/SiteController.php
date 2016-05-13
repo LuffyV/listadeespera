@@ -14,6 +14,10 @@ class SiteController extends Controller
 {
     public function behaviors()
     {
+        $horarioSistema = (new \yii\db\Query())
+            ->select(['date_open', 'date_close'])
+            ->from('configuration')
+            ->one();        
         return [
             'access' => [
                 'class' => AccessControl::className(),

@@ -95,7 +95,7 @@ use kartik\popover\PopoverX;
             ]) ?>
 
             <?= $form->field($model, 'subject_id')->checkboxList(
-                ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+                ArrayHelper::map(Subject::find()->orderBy('name')->all(), 'id', 'name'),
                 array('class'=>'RegistrationEx'))
             ?>
         </div>

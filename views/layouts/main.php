@@ -9,6 +9,17 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+$extraordinariosPermitidos = (new \yii\db\Query())
+->select(['max_subject_extraordinary'])
+->from('configuration')
+->one();
+
+if($extraordinariosPermitidos['max_subject_extraordinary'] == "0"){
+    $seAceptanExtraordinarios = False;
+} else {
+    $seAceptanExtraordinarios = True;
+}
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -41,14 +52,15 @@ AppAsset::register($this);
                 'visible' => !Yii::$app->user->isGuest,
                 'items' => [
                     [
-                        'label' => 'Registro Regular',
+                        'label' => 'Registro Ordinario',
                         'url' => ['/registration/create/'],
                         'visible' => !Yii::$app->user->isGuest,
                     ],
                     [
                         'label' => 'Registro Extraordinario',
                         'url' => ['/registration-ex/create/'],
-                        'visible' => !Yii::$app->user->isGuest,
+                        'visible' => ((!Yii::$app->user->isGuest) && ($seAceptanExtraordinarios))
+                        || Yii::$app->user->can('administrator'),
                     ],
                     [
                         'label' => 'Catálogo de Registros Ordinarios',
@@ -77,7 +89,7 @@ AppAsset::register($this);
                         'url' => ['/subject/'],
                         'visible' => Yii::$app->user->can('administrator')
                     ],
-                    ['label' => Yii::t('app', 'Curriculum'),
+                    ['label' => Yii::t('app', 'Curriculums'),
                         'url' => ['/curriculum/'],
                         'visible' => Yii::$app->user->can('administrator')
                     ],
@@ -86,9 +98,9 @@ AppAsset::register($this);
                         'visible' => Yii::$app->user->can('administrator')
                     ],
                     ['label' => 'Vaciar Base de Datos',
-                        'url' => ['/truncate/'],
-                        'visible' => Yii::$app->user->can('administrator')
-                    ],
+                    'url' => ['/truncate/'],
+                    'visible' => Yii::$app->user->can('administrator')
+                    ],                
                 ],
             ],
             ['label' => Yii::t('app', 'Reports'),

@@ -9,7 +9,7 @@ use app\models\Student;
 /* @var $searchModel app\models\RegistrationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Registrations');
+$this->title = Yii::t('app', 'Registration Ord');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="registration-index">

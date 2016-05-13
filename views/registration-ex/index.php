@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'modality',
-                'label' => 'Modality',
+                'label' => Yii::t('app', 'Modality'),
                 'value' => function($dataProvider){
                     if($dataProvider['modality'] == '0') return 'Ordinario';
                     if($dataProvider['modality'] == '1') return 'Extraordinario';
