@@ -15,6 +15,7 @@ class RegistrationSearch extends Registration
     public $teacher;
     public $matricula;
     public $curriculum;
+    public $modelo;
 
     /**
      * @inheritdoc
@@ -22,8 +23,8 @@ class RegistrationSearch extends Registration
     public function rules()
     {
         return [
-            [['id', 'subject_id', 'student_id', 'modality'], 'safe'],
-            [['teacher', 'matricula', 'curriculum'], 'safe'],
+            [['id', 'subject_id', 'student_id', 'modality', 'created_at'], 'safe'],
+            [['teacher', 'matricula', 'curriculum', 'modelo'], 'safe'],
         ];
     }
 
@@ -61,9 +62,9 @@ class RegistrationSearch extends Registration
 
         $query->joinWith('subject', 'student');
 
-
         $query->andFilterWhere(['like', 'subject_id', $this->subject_id])
             ->andFilterWhere(['like', 'student_id', $this->student_id])
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
             ->andFilterWhere(['modality' => 0]);
             // ->andFilterWhere(['like', 'modality', $this->modality]);
 

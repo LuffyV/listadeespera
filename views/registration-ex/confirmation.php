@@ -1,6 +1,11 @@
 <?php 
 use yii\helpers\Html;
- ?>
+
+$mensajeConfirmacion = (new \yii\db\Query())
+  ->select(['confirmation_msg'])
+  ->from('configuration')
+  ->one();   
+?>
 
 <div class="confirmation">
   <div class="alert alert-success fade in">
@@ -19,10 +24,7 @@ use yii\helpers\Html;
 			      <h3 class="panel-title">Todo terminado</h3>
 		    </div>
 		    <div class="panel-body">
-		    	Asegúrate de estar pendiente a la lista final de las materias que acabas de solicitar.
-		    	<br><br>
-		    	Si deseas colocarte en lista de espera para algún curso dentro de la modalidad de Extraordinario o Acompañamiento, puedes
-		    	hacerlo seleccionando la pestaña "Registros" -> "Registro Extraordinario".
+		    	<?php echo $mensajeConfirmacion['confirmation_msg'] ?>
 		    </div>
 	  	</div>
 		</div>

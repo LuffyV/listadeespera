@@ -22,7 +22,7 @@ class RegistrationExSearch extends RegistrationEx
     public function rules()
     {
         return [
-            [['id', 'subject_id', 'student_id', 'modality'], 'safe'],
+            [['id', 'subject_id', 'student_id', 'modality', 'created_at'], 'safe'],
             [['teacher', 'matricula', 'curriculum'], 'safe'],
         ];
     }
@@ -63,6 +63,7 @@ class RegistrationExSearch extends RegistrationEx
 
         $query->andFilterWhere(['like', 'subject_id', $this->subject_id])
             ->andFilterWhere(['like', 'student_id', $this->student_id])
+            ->andFilterWhere(['like', 'created_at', $this->created_at])
             ->andFilterWhere(['modality' => 1]);
             // ->andFilterWhere(['like', 'modality', $this->modality]);
 

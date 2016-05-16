@@ -19,6 +19,8 @@ $items = ['Registros', 'Materias', 'Estudiantes'];
 
   <?=	$form->field($model, 'tabla')->inline()->radioList($items); ?>
 
+  <?= $form->field($model, 'password')->passwordInput() ?>
+
     <div class="form-group">
     	<?php 
     		echo PopoverX::widget([

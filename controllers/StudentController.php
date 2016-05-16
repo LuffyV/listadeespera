@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Student;
+use app\models\User;
 use app\models\StudentSearch;
 use app\models\FileImport;
 use yii\web\Controller;
@@ -36,6 +37,34 @@ class StudentController extends Controller
                 ],
             ],
         ];
+    }
+
+    /**
+     * Creates a new Student model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Student();
+
+        if ($model->load(Yii::$app->request->post())) {
+            // primero se crea su usuario
+            $matricula = Yii::$app->request->post('Student', null)['student_id'];
+            $username = 'a'.$matricula;
+            $password_hash = Yii::$app->getSecurity()->generatePasswordHash('contra');
+            $userSql = "INSERT INTO users(username, password_hash) VALUES ('$username', '$password_hash')";
+            $queryUsers = Yii::$app->db->createCommand($userSql)->execute();
+
+            if($queryUsers){
+                $model->save();
+            }
+            return $this->redirect(['view', 'id' => $model->user_id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
     }
 
     public function actionImport(){
@@ -123,24 +152,6 @@ class StudentController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Creates a new Student model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Student();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**

@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'curriculum_id',
             [
                 'attribute' => 'curriculum_id',
-                'label' => 'Curriculum',
+                'label' => Yii::t('app', 'Curriculum'),
                 'value' => 'curriculum.short_name',
             ],
             'phone',

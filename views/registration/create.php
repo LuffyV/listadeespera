@@ -13,6 +13,6 @@ $this->title = Yii::t('app', 'Regular Registration');
 
     <?= $this->render('_form', [
         'model' => $model,
-        'modelStu' => $modelStu, 
+        'modelStu' => $modelStu,
     ]) ?>
 </div>

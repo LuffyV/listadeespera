@@ -42,6 +42,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'student.student_id',
             ],
             [
+                'attribute' => 'student_model',
+                'label' => 'Modelo del Estudiante',
+                'value' => function($dataProvider){
+                    $modeloDelEstudiante = Student::findOne($dataProvider["student_id"])->model;
+                    if($modeloDelEstudiante == '0') return 'MEFI';
+                    if($modeloDelEstudiante == '1') return 'MEyA';
+                },
+            ],
+            [
                 'attribute' => 'curriculum',
                 'label' => Yii::t('app', 'Curriculum'),
                 'value' => function($dataProvider){
@@ -56,7 +65,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($dataProvider['modality'] == '1') return 'Extraordinario';
                 },
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'created_at',
+                'label' => Yii::t('app', 'Created At'),
+                'value' => 'created_at',
+            ],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {delete}'],
         ],
     ]); ?>
 </div>

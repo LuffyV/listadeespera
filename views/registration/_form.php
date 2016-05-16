@@ -65,10 +65,10 @@ use kartik\popover\PopoverX;
                 <label>
                     Modelo educativo:
                     <?php 
-                    $modeloEstudiante = $informacionEstudiante['model'];
-                    if($modeloEstudiante == 0) $modeloEstudiante = "MEyA";
-                    if($modeloEstudiante == 1) $modeloEstudiante = "MEFI";
-                    echo $modeloEstudiante;
+                    $modeloEstudianteNum = $informacionEstudiante['model'];
+                    if($modeloEstudianteNum == 0) $modeloEstudianteTxt = "MEyA";
+                    if($modeloEstudianteNum == 1) $modeloEstudianteTxt = "MEFI";
+                    echo $modeloEstudianteTxt;
                     ?>
                 </label><br>
                 <label>
@@ -93,7 +93,9 @@ use kartik\popover\PopoverX;
             ]) ?>
 
             <?= $form->field($model, 'subject_id')->checkboxList(
-                ArrayHelper::map(Subject::find()->orderBy('name')->all(), 'id', 'name'),
+                ArrayHelper::map(Subject::find()
+                    ->where(['educational_model' => '2'])->orWhere(['educational_model' => $modeloEstudianteNum])
+                    ->orderBy('name')->all(), 'id', 'name'),
                 array('class'=>'RegistrationReg'))
             ?>
         </div>

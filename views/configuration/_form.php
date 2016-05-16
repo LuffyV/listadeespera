@@ -30,6 +30,9 @@ use kartik\widgets\TouchSpin;
     <?= $form->field($model, 'instructions_after_close')->widget(letyii\tinymce\Tinymce::className(), [
             'options' => ['id' => 'testid']]); ?>
 
+    <?= $form->field($model, 'confirmation_msg')->widget(letyii\tinymce\Tinymce::className(), [
+            'options' => ['id' => 'testid']]); ?>            
+
     <?= $form->field($model, 'date_open')->widget(DateTimePicker::classname(), [
         'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
         'pluginOptions' => [

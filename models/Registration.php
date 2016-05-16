@@ -11,6 +11,7 @@ use Yii;
  * @property string $subject_id
  * @property string $student_id
  * @property integer $modality
+ * @property integer $created_at
  *
  * @property Subject $subject
  */
@@ -45,6 +46,7 @@ class Registration extends \yii\db\ActiveRecord
             'subject_id' => Yii::t('app', 'Regular Subjects'),
             'student_id' => Yii::t('app', 'Student ID'),
             'modality' => Yii::t('app', 'Modality'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 
@@ -69,8 +71,10 @@ class Registration extends \yii\db\ActiveRecord
         if($this->student_id == null){
             $this->student_id = Yii::$app->user->identity->id;
         }
-        
-        $this->modality = 0; // todos los que se guarden con este modelo son regulares
+
+        // todos los que se guarden con este modelo son regulares
+        $this->modality = 0;
+        $this->created_at = time();
         return true;
     }
 }

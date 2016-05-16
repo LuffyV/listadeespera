@@ -56,6 +56,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($dataProvider['modality'] == '1') return 'Extraordinario';
                 }
             ],
+            [
+                'attribute' => 'created_at',
+                'label' => Yii::t('app', 'Created At'),
+                'value' => 'created_at',
+            ],            
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

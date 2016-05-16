@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'instructions_before_open:html',
             'instructions_while_open:html',
             'instructions_after_close:html',
+            'confirmation_msg:html',
             'date_open',
             'date_close',
         ],

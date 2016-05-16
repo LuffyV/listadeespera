@@ -11,6 +11,7 @@ use Yii;
  * @property string $subject_id
  * @property string $student_id
  * @property integer $modality
+ * @property integer $created_at
  *
  * @property Subject $subject
  */
@@ -45,6 +46,7 @@ class RegistrationEx extends \yii\db\ActiveRecord
             'subject_id' => Yii::t('app', 'Extraordinary Subjects'),
             'student_id' => Yii::t('app', 'Student ID'),
             'modality' => Yii::t('app', 'Modality (Ex)'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 
@@ -69,6 +71,7 @@ class RegistrationEx extends \yii\db\ActiveRecord
 
         // todos los que se guarden con este modelo son extraordinarios
         $this->modality = 1;
+        $this->created_at = time();
         return true;
     }
 }

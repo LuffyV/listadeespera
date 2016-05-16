@@ -76,38 +76,47 @@ class RegistrationExController extends Controller
      */
     public function actionCreate()
     {
-        /* Se cuenta el número de materias que se quieren guardar, junto con los datos
-         de cada una y el teléfono del usuario para guardar cada materia y al final
-         actualizar el teléfono */
-        $count = count(Yii::$app->request->post('RegistrationEx', null)['subject_id']);
-        $phone = Yii::$app->request->post('Student')['phone'];
-        $datos = Yii::$app->request->post('RegistrationEx', null)['subject_id'];
-        // print_r($datos);
-        // echo "El numero de materias que se intentaron meter es: " . $count;
+        $queryExtraordinarios = (new \yii\db\Query())
+            ->select(['max_subject_extraordinary'])
+            ->from('configuration')
+            ->where(['id' => 1])
+            ->one();
+        $numExtraordinarios = (int)$queryExtraordinarios["max_subject_extraordinary"];
 
-        if(Yii::$app->request->post()){
-            $registrations = [new RegistrationEx()];
-
-            for($i = 0; $i < $count; $i++) {
-                $registrations[$i] = new RegistrationEx();
-                $registrations[$i]->subject_id = $datos[$i];
-                $registrations[$i]->save(false);
-                // print_r($registrations[$i]);
-            }
-            // sólo se actualiza si escriben algo dentro del campo
-            if($phone != ""){
-                $stu = Student::findOne(Yii::$app->user->identity->id);
-                $stu->phone = $phone;
-                $stu->update();
-            }
-            return $this->redirect('confirmation');
+        // si no se pueden cargar extraordinarios, no deje entrar a los estudiantes
+        if($numExtraordinarios == 0 && !Yii::$app->user->can('administrator')){
+            return $this->goHome();
         } else {
-            $model = new RegistrationEx();
-            $modelStu = new Student();
-            return $this->render('create', [
-                'model' => $model,
-                'modelStu' => $modelStu,
-            ]);
+            if(Yii::$app->request->post()){
+                /* Se cuenta el número de materias que se quieren guardar, junto con los datos
+                 de cada una y el teléfono del usuario para guardar cada materia y al final
+                 actualizar el teléfono */    
+                $count = count(Yii::$app->request->post('RegistrationEx', null)['subject_id']);
+                $phone = Yii::$app->request->post('Student')['phone'];
+                $datos = Yii::$app->request->post('RegistrationEx', null)['subject_id'];
+                $registrations = [new RegistrationEx()];
+
+                for($i = 0; $i < $count; $i++) {
+                    $registrations[$i] = new RegistrationEx();
+                    $registrations[$i]->subject_id = $datos[$i];
+                    $registrations[$i]->save(false);
+                    // print_r($registrations[$i]);
+                }
+                // sólo se actualiza si escriben algo dentro del campo
+                if($phone != ""){
+                    $stu = Student::findOne(Yii::$app->user->identity->id);
+                    $stu->phone = $phone;
+                    $stu->update();
+                }
+                return $this->redirect('confirmation');
+            } else {
+                $model = new RegistrationEx();
+                $modelStu = new Student();
+                return $this->render('create', [
+                    'model' => $model,
+                    'modelStu' => $modelStu,
+                ]);
+            }            
         }
     }
 

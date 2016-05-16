@@ -19,7 +19,7 @@ class ConfigurationSearch extends Configuration
     {
         return [
             [['id', 'max_subject_regular', 'max_subject_extraordinary'], 'integer'],
-            [['instructions_before_open', 'instructions_while_open', 'instructions_after_close', 'date_open', 'date_close'], 'safe'],
+            [['instructions_before_open', 'instructions_while_open', 'instructions_after_close', 'confirmation_msg','date_open', 'date_close'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class ConfigurationSearch extends Configuration
 
         $query->andFilterWhere(['like', 'instructions_before_open', $this->instructions_before_open])
             ->andFilterWhere(['like', 'instructions_while_open', $this->instructions_while_open])
-            ->andFilterWhere(['like', 'instructions_after_close', $this->instructions_after_close]);
+            ->andFilterWhere(['like', 'instructions_after_close', $this->instructions_after_close])
+            ->andFilterWhere(['like', 'confirmation_msg', $this->confirmation_msg]);
 
         return $dataProvider;
     }

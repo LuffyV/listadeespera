@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'educational_model',
             [
                 'attribute' => 'educational_model',
-                'label' => 'Educational Model',
+                'label' => Yii::t('app', 'Educational Model'),
                 'value' => function($dataProvider){
                     if($dataProvider['educational_model'] == '0') return 'MEFI';
                     if($dataProvider['educational_model'] == '1') return 'MEyA';

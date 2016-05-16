@@ -67,10 +67,10 @@ use kartik\popover\PopoverX;
                 <label>
                     Modelo educativo:
                     <?php 
-                    $modeloEstudiante = $informacionEstudiante['model'];
-                    if($modeloEstudiante == 0) $modeloEstudiante = "MEyA";
-                    if($modeloEstudiante == 1) $modeloEstudiante = "MEFI";
-                    echo $modeloEstudiante;
+                    $modeloEstudianteNum = $informacionEstudiante['model'];
+                    if($modeloEstudianteNum == 0) $modeloEstudianteTxt = "MEyA";
+                    if($modeloEstudianteNum == 1) $modeloEstudianteTxt = "MEFI";
+                    echo $modeloEstudianteTxt;
                     ?>
                 </label><br>
                 <label>
@@ -95,14 +95,17 @@ use kartik\popover\PopoverX;
             ]) ?>
 
             <?= $form->field($model, 'subject_id')->checkboxList(
-                ArrayHelper::map(Subject::find()->orderBy('name')->all(), 'id', 'name'),
+                ArrayHelper::map(Subject::find()
+                    ->where(['educational_model' => '2'])->orWhere(['educational_model' => $modeloEstudianteNum])
+                    ->orderBy('name')->all(), 'id', 'name'),
                 array('class'=>'RegistrationEx'))
             ?>
         </div>
         <div class="form-group">
             <?php 
                 echo PopoverX::widget([
-                    'header' => '¿Estás completamente seguro?',
+                    'header' => '<b>¿Estás completamente seguro?</b>',
+                    'type' => PopoverX::TYPE_INFO,
                     'placement' => PopoverX::ALIGN_RIGHT,
                     'content' => "Revisa bien tu información antes de continuar.
                     Una vez que aceptes NO PODRÁS REALIZAR CAMBIOS y tendrás que comunicarte con Control Escolar
