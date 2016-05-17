@@ -14,7 +14,6 @@ use kartik\popover\PopoverX;
 ?>
 
 <div class="registration-form">
-
     <!-- Evita que se seleccionen más de X materias en el checkbox -->
     <?php
         $queryOrdinarios = (new \yii\db\Query())
@@ -66,8 +65,8 @@ use kartik\popover\PopoverX;
                     Modelo educativo:
                     <?php 
                     $modeloEstudianteNum = $informacionEstudiante['model'];
-                    if($modeloEstudianteNum == 0) $modeloEstudianteTxt = "MEyA";
-                    if($modeloEstudianteNum == 1) $modeloEstudianteTxt = "MEFI";
+                    if($modeloEstudianteNum == 0) $modeloEstudianteTxt = "MEFI";
+                    if($modeloEstudianteNum == 1) $modeloEstudianteTxt = "MEyA";
                     echo $modeloEstudianteTxt;
                     ?>
                 </label><br>
@@ -95,7 +94,7 @@ use kartik\popover\PopoverX;
             <?= $form->field($model, 'subject_id')->checkboxList(
                 ArrayHelper::map(Subject::find()
                     ->where(['educational_model' => '2'])->orWhere(['educational_model' => $modeloEstudianteNum])
-                    ->orderBy('name')->all(), 'id', 'name'),
+                    ->andWhere(['available' => '1'])->orderBy('name')->all(), 'id', 'name'),
                 array('class'=>'RegistrationReg'))
             ?>
         </div>

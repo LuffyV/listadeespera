@@ -39,6 +39,7 @@ return [
     'Statuses' => 'Los estados',
     'Update' => 'Actualizar',
     'Update Configuration' => 'Actualizar Configuración',
+    'Update Student:' => 'Actualizar Estudiante:',
     'Updated At' => 'Actualizado A',
     'Registration Ord' => 'Registros Ordinarios',
     'Registration Exes' => 'Registros Extraordinarios',
@@ -82,5 +83,6 @@ return [
     'Instructions While Open' => 'Instrucciones Durante',
     'Instructions After Close' => 'Instrucciones Después de Cierre',
     'Confirmation Message' => 'Mensaje de Confirmación',
+    'Available' => 'Disponible',
 ];
 ?>

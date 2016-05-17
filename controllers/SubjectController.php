@@ -71,7 +71,8 @@ class SubjectController extends Controller
     public function actionCreate()
     {
         $model = new Subject();
-
+        // por default está seleccionado como "no disponible" cuando se va a crear uno
+        $model->available = 0;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

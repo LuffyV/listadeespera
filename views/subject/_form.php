@@ -12,6 +12,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php 
         $modelos_educativos = array("MEFI", "MEyA", "Ambos");
+        $disponibilidad = array("No", "Sí");
      ?>
 
     <?php $form = ActiveForm::begin(); ?>
@@ -25,6 +26,8 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'classroom')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'educational_model')->radioList($modelos_educativos) ?>
+
+    <?= $form->field($model, 'available')->radioList($disponibilidad) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

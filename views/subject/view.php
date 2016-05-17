@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'schedule',
             'classroom',
             'educational_model',
+            'available',
         ],
     ]) ?>
 

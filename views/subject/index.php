@@ -39,7 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($dataProvider['educational_model'] == '2') return 'Ambos';
                 }
             ],
-
+            [
+                'attribute' => 'available',
+                'label' => Yii::t('app', 'Available'),
+                'value' => function($dataProvider){
+                    if($dataProvider['available'] == '1') return "Sí";
+                    if($dataProvider['available'] == '0') return "No";
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

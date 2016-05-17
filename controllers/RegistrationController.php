@@ -10,6 +10,7 @@ use app\models\RegistrationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 
 /**
  * RegistrationController implements the CRUD actions for Registration model.
@@ -76,38 +77,48 @@ class RegistrationController extends Controller
      */
     public function actionCreate()
     {
-        /* Se cuenta el número de materias que se quieren guardar, junto con los datos
-         de cada una y el teléfono del usuario para guardar cada materia y al final
-         actualizar el teléfono */
-        $count = count(Yii::$app->request->post('Registration', null)['subject_id']);
-        $phone = Yii::$app->request->post('Student')['phone'];
-        $datos = Yii::$app->request->post('Registration', null)['subject_id'];
-        // print_r($datos);
-        // echo "El numero de materias que se intentaron meter es: " . $count;
+        $horarioSistema = (new \yii\db\Query())
+            ->select(['date_open', 'date_close'])
+            ->from('configuration')
+            ->one();
 
-        if(Yii::$app->request->post()){
-            $registrations = [new Registration()];
-
-            for($i = 0; $i < $count; $i++) {
-                $registrations[$i] = new Registration();
-                $registrations[$i]->subject_id = $datos[$i];
-                $registrations[$i]->save(false);
-                // print_r($registrations[$i]);
-            }
-            // sólo se actualiza si escriben algo dentro del campo
-            if($phone != ""){
-                $stu = Student::findOne(Yii::$app->user->identity->id);
-                $stu->phone = $phone;
-                $stu->update();
-            }
-            return $this->redirect('confirmation');
+        // si no es hora y es estudiante, no puede entrar
+        if((new \DateTime() < new \DateTime($horarioSistema['date_open']) ||
+            new \DateTime() > new \DateTime($horarioSistema['date_close'])) &&
+            !Yii::$app->user->can('administrator')){
+            return $this->goHome();
         } else {
-            $model = new Registration();
-            $modelStu = new Student();
-            return $this->render('create', [
-                'model' => $model,
-                'modelStu' => $modelStu,
-            ]);
+            /* Se cuenta el número de materias que se quieren guardar, junto con los datos
+             de cada una y el teléfono del usuario para guardar cada materia y al final
+             actualizar el teléfono */
+            $count = count(Yii::$app->request->post('Registration', null)['subject_id']);
+            $phone = Yii::$app->request->post('Student')['phone'];
+            $datos = Yii::$app->request->post('Registration', null)['subject_id'];
+
+            if(Yii::$app->request->post()){
+                $registrations = [new Registration()];
+
+                for($i = 0; $i < $count; $i++) {
+                    $registrations[$i] = new Registration();
+                    $registrations[$i]->subject_id = $datos[$i];
+                    $registrations[$i]->save(false);
+                    // print_r($registrations[$i]);
+                }
+                // sólo se actualiza si escriben algo dentro del campo
+                if($phone != ""){
+                    $stu = Student::findOne(Yii::$app->user->identity->id);
+                    $stu->phone = $phone;
+                    $stu->update();
+                }
+                return $this->redirect('confirmation');
+            } else {
+                $model = new Registration();
+                $modelStu = new Student();
+                return $this->render('create', [
+                    'model' => $model,
+                    'modelStu' => $modelStu,
+                ]);
+            }
         }
     }
 

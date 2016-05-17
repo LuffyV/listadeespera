@@ -44,13 +44,14 @@ class TruncateController extends Controller{
 					Yii::$app->db->createCommand()->truncateTable('subject')->execute();
 					Yii::$app->db->createCommand('set foreign_key_checks=1')->execute();
 				}
-				/* 
+				
+				// elimina todos los estudiantes y sus usuarios, sólo deja los que tienen permisos en la tabla de auth_assignment
 				if($tabla == 2){
 					Yii::$app->db->createCommand('set foreign_key_checks=0')->execute();
-					Yii::$app->db->createCommand()->truncateTable('student')->execute();
-					Yii::$app->db->createCommand('set foreign_key_checks=1')->execute();				
+					Yii::$app->db->createCommand('DELETE FROM student WHERE user_id NOT IN (SELECT f.user_id FROM auth_assignment f)')->execute();
+					Yii::$app->db->createCommand('DELETE FROM users WHERE id NOT IN (SELECT f.user_id FROM auth_assignment f)')->execute();
+					Yii::$app->db->createCommand('set foreign_key_checks=1')->execute();
 				}
-				*/
 				return $this->render('index', ['model' => $model]);
 			} else {
 				// mensaje de error

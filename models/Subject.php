@@ -36,7 +36,8 @@ class Subject extends \yii\db\ActiveRecord
             [['educational_model'], 'integer'],
             [['name', 'teacher'], 'string', 'max' => 100],
             [['schedule'], 'string', 'max' => 135],
-            [['classroom'], 'string', 'max' => 20]
+            [['classroom'], 'string', 'max' => 20],
+            [['available'], 'boolean']
         ];
     }
 
@@ -52,6 +53,8 @@ class Subject extends \yii\db\ActiveRecord
             'schedule' => Yii::t('app', 'Schedule'),
             'classroom' => Yii::t('app', 'Classroom'),
             'educational_model' => Yii::t('app', 'Educational Model'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'available' => Yii::t('app', 'Available'),
         ];
     }
 
@@ -72,6 +75,9 @@ class Subject extends \yii\db\ActiveRecord
         }
         if($this->classroom == null){
             $this->classroom = "NOT DEFINED";
+        }
+        if($this->available == null){
+            $this->available = 0;
         }
         return true;
     }
