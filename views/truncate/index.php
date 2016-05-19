@@ -12,6 +12,19 @@ $this->title = Yii::t('app', 'Truncate');
 $items = ['Registros', 'Materias', 'Estudiantes'];
 ?>
 
+<div class="col-lg-12">
+    <?php if(Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= Yii::$app->session->getFlash('error') ?>
+        </div>
+    <?php endif; ?>
+    <?php if(Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success" role="alert">
+            <?= Yii::$app->session->getFlash('success') ?>
+        </div>
+    <?php endif; ?>
+</div>
+
 <div class="truncate-form">
   <h1><?= Html::encode($this->title) ?></h1>
 
@@ -21,20 +34,20 @@ $items = ['Registros', 'Materias', 'Estudiantes'];
 
   <?= $form->field($model, 'password')->passwordInput() ?>
 
-    <div class="form-group">
-    	<?php 
-    		echo PopoverX::widget([
-    			'header' => '<b>Necesitamos asegurarnos de que realmente desees hacer esto</b>',
-    			'placement' => PopoverX::ALIGN_RIGHT,
-    			'content' => 'Confirma para poder eliminar la tabla, se te pedirá que
-    			introduzcas tu contraseña para poder continuar.',
-    			'footer' => Html::submitButton('Eliminar esta tabla', ['class' => 'btn btn-success btn-sm'])
-    			.
-          Html::button("Cancelar", ["class"=>"btn btn-danger btn-sm", 'data-dismiss' => 'popover-x']),
-          'toggleButton' => ['label'=>'Eliminar', 'class'=>'btn btn-primary'],
-    			]);
-    	?>
-    </div>
+  <div class="form-group">
+  	<?php 
+    	echo PopoverX::widget([
+    		'header' => '<b>Necesitamos asegurarnos de que realmente desees hacer esto</b>',
+  			'placement' => PopoverX::ALIGN_RIGHT,
+  			'content' => 'Confirma para poder eliminar la tabla, se te pedirá que
+    		introduzcas tu contraseña para poder continuar.',
+    		'footer' => Html::submitButton('Eliminar esta tabla', ['class' => 'btn btn-success btn-sm'])
+    		.
+        Html::button("Cancelar", ["class"=>"btn btn-danger btn-sm", 'data-dismiss' => 'popover-x']),
+        'toggleButton' => ['label'=>'Eliminar', 'class'=>'btn btn-primary'],
+    		]);
+    ?>
+  </div>
 
-    <?php ActiveForm::end(); ?>  
+  <?php ActiveForm::end(); ?>  
 </div>
