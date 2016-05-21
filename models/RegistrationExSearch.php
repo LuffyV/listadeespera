@@ -64,9 +64,7 @@ class RegistrationExSearch extends RegistrationEx
         $query->andFilterWhere(['like', 'subject_id', $this->subject_id])
             ->andFilterWhere(['like', 'student_id', $this->student_id])
             ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['modality' => 1]);
-            // ->andFilterWhere(['like', 'modality', $this->modality]);
-
+            ->andFilterWhere(['like', 'modality', $this->modality]);
         return $dataProvider;
     }
 }

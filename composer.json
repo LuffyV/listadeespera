@@ -22,7 +22,8 @@
         "yiidoc/yii2-redactor": "*",
         "kartik-v/yii2-widget-datetimepicker": "*",
 		"kartik-v/yii2-popover-x": "*",
-		"kartik-v/yii2-widget-touchspin": "*"
+		"kartik-v/yii2-widget-touchspin": "*",
+        "yiisoft/yii2-jui": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

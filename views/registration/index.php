@@ -4,12 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Curriculum;
 use app\models\Student;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistrationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Registration Ord');
+$this->title = "Registros";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="registration-index">
@@ -49,12 +50,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($modeloDelEstudiante == '0') return 'MEFI';
                     if($modeloDelEstudiante == '1') return 'MEyA';
                 },
+                'filter' => [0 => 'MEFI', 1 => 'MEyA'],
             ],
             [
                 'attribute' => 'curriculum',
                 'label' => Yii::t('app', 'Curriculum'),
                 'value' => function($dataProvider){
-                    return Curriculum::findOne(Student::findOne($dataProvider["student_id"])->curriculum_id)->short_name;
+                    $short_name = Curriculum::findOne(Student::findOne($dataProvider["student_id"])->curriculum_id)->short_name;
+                    return $short_name;
                 },
             ],
             [
@@ -64,11 +67,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     if($dataProvider['modality'] == '0') return 'Ordinario';
                     if($dataProvider['modality'] == '1') return 'Extraordinario';
                 },
+                'filter' => [0 => 'Ordinario', 1 => 'Extraordinario'],
             ],
             [
                 'attribute' => 'created_at',
                 'label' => Yii::t('app', 'Created At'),
                 'value' => 'created_at',
+                'filter' => \yii\jui\DatePicker::widget([
+                    'model'=>$searchModel,
+                    'attribute'=>'created_at',
+                    'language' => 'es',
+                    'dateFormat' => 'yyyy-MM-dd',
+                ]),
+                'format' => 'html',
             ],
             ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {delete}'],
         ],

@@ -63,15 +63,17 @@ AppAsset::register($this);
                         || Yii::$app->user->can('administrator'),
                     ],
                     [
-                        'label' => 'Catálogo de Registros Ordinarios',
+                        'label' => 'Catálogo de Registros Generales',
                         'url' => ['/registration/'],
                         'visible' => Yii::$app->user->can('administrator'),
                     ],
+                    /*
                     [
                         'label' => 'Catálogo de Registros Extraordinarios',
                         'url' => ['/registration-ex/'],
                         'visible' => Yii::$app->user->can('administrator'),
                     ],
+                    */
                 ],
             ],
             ['label' => Yii::t('app', 'Administration'),
