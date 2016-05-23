@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
 use app\models\Curriculum;
 use app\models\Student;
@@ -59,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $short_name = Curriculum::findOne(Student::findOne($dataProvider["student_id"])->curriculum_id)->short_name;
                     return $short_name;
                 },
+                'filter' => ArrayHelper::map(Curriculum::find()->all(), 'id', 'short_name')
             ],
             [
                 'attribute' => 'modality',

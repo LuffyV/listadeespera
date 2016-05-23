@@ -63,7 +63,6 @@ class RegistrationSearch extends Registration
 
         $query->joinWith(['subject', 'student']);
 
-
         $query->andFilterWhere(['like', 'subject.name', $this->subject_id])
             ->andFilterWhere(['like', 'subject.teacher', $this->teacher])
             ->andFilterWhere(['like', 'student.student_id', $this->student_id])
